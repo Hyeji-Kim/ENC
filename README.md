@@ -93,7 +93,8 @@ mv vgg16_svd_1.caffemodel ./init/decomp_init/vgg16/comp_vgg16/model/vgg16_svd_1.
 
 ## Reference
 
-For network decomposition, we refer to "https://github.com/chengtaipu/lowrankcnn".
+* Network decomposition : "https://github.com/chengtaipu/lowrankcnn"
+* ResNet-56 for Cifar10 : "https://github.com/yihui-he/resnet-cifar10-caffe"
 
 ## Contact
 
