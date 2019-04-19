@@ -273,8 +273,7 @@ def Over_2_level_group_gen(group_hier, set_idx_, r_max, r1_new, x_range):
         mask = r1_new[idx]>0
         r1_new_mask = r1_new[idx[mask]]
         tmp = range(0,sum(r_max[np.asarray(group_hier[set_idx_][i])]) + 1, min(r1_new_mask))
- #       tmp = range(0,sum(r_max[np.asarray(group_hier[set_idx_][i])]) + min(r1_new[np.asarray(group_hier[set_idx_][i])]), min(r1_new[np.asarray(group_hier[set_idx_][i])]))
-#        tmp = range(0,sum(r_max[np.asarray(group_hier[set_idx_][i])])+r1_new[np.asarray(group_hier[set_idx_][i][0])], r1_new[np.asarray(group_hier[set_idx_][i][0])])
+ 
         range_2 = range_2 + [tmp]
 
         # --- Bottom level ----
@@ -368,21 +367,12 @@ def Ac_hier(Rmax, R_idx, R_tmp, g_idx, eigen_cumsum, R_norm, A,  R, C_orig, a, n
         eigen_sum[:,i3] = (eigen_tmp[np.array(R_set[:,i3],dtype=int)-1]-eigen_cumsum[ig][0][0])/(eigen_cumsum[ig][0][-1]-eigen_cumsum[ig][0][0])
         acc_r_sum[:,i3] = interpolate.pchip_interpolate(R_norm[:,ig], A[:,ig], R_set[:,i3]/R[-1,ig].astype(float))
 
-    #C_tmp = np.sum( R_set/R[-1][np.asarray(g_idx)], axis=1)
-
     C_tmp = R_set.astype(float).dot(a[np.asarray(g_idx)])/C_orig
-
-    #C_max = R[-1][np.asarray(g_idx)].dot(a[np.asarray(g_idx)])
-    #C_tmp = R_set.astype(float).dot(a[np.asarray(g_idx)])/C_max
-
     eigen_prod = np.multiply(np.prod(eigen_sum,axis=1),C_tmp)
-
-    #eigen_prod = np.prod(eigen_sum,axis=1)*Ct
-
     eigen_prod = np.prod(acc_r_sum,axis=1) + eigen_prod
 
     eigen_prod2  = eigen_prod[eigen_prod.argsort()[::-1]]
-    #tmp_num = min(min(max(5,int(len(eigen_prod)*0.01)),len(R_tmp)),num)
+ 
     tmp_num = min(len(R_tmp),num)
     tmp_val = eigen_prod2[tmp_num-1]
     tmp_idx = eigen_prod>=tmp_val
@@ -398,16 +388,11 @@ def Am_hier(Rmax, R_idx, R_tmp, g_idx, eigen_cumsum, R_norm, A,  R, C_orig, a, n
     for i3 in range(np.shape(R_tmp)[1]) :
         ig = g_idx[i3]
         acc_r_sum[:,i3] = interpolate.pchip_interpolate(R_norm[:,ig], A[:,ig], R_set[:,i3]/R[-1,ig].astype(float))
-
-    #C_tmp = R_set.dot(a[np.asarray(g_idx)])/C_orig
+    
     eigen_prod = np.prod(acc_r_sum,axis=1)
-
-    eigen_prod2  = eigen_prod[eigen_prod.argsort()[::-1]]
-    #tmp_num = min(min(max(5,int(len(eigen_prod)*0.01)),len(R_tmp)),num)
-    #print 'tmp_num ',tmp_num, len(R_tmp), 
-    tmp_num = min(len(R_tmp),num)
-    #print 'tmp_num ',tmp_num, len(R_tmp)
-
+    eigen_prod2  = eigen_prod[eigen_prod.argsort()[::-1]]    
+    
+    tmp_num = min(len(R_tmp),num)    
     tmp_val = eigen_prod2[tmp_num-1]
     tmp_idx = eigen_prod>=tmp_val
     R_ = R_tmp[tmp_idx]
@@ -425,15 +410,10 @@ def Ap_hier(Rmax, R_idx, R_tmp, g_idx, eigen_cumsum, R_norm,  R, C_orig, a, num)
         ig = g_idx[i3]
         eigen_tmp = np.asarray(eigen_cumsum[ig][0][:])
         eigen_sum[:,i3] = (eigen_tmp[np.array(R_set[:,i3])-1]-eigen_cumsum[ig][0][0])/(eigen_cumsum[ig][0][-1]-eigen_cumsum[ig][0][0])
-
-    #Cmax = R[-1].dot(a)/C_orig
-    #C_tmp = R_set.dot(a[np.asarray(g_idx)])/C_orig/Cmax
-    #eigen_prod = np.multiply(np.prod(eigen_sum,axis=1),C_tmp)
-
+   
     eigen_prod = np.prod(eigen_sum,axis=1)
-
     eigen_prod2  = eigen_prod[eigen_prod.argsort()[::-1]]
-    #tmp_num = min(min(max(5,int(len(eigen_prod)*0.01)),len(R_tmp)),num)
+
     tmp_num = min(len(eigen_prod),num)
     tmp_val = eigen_prod2[tmp_num-1]
     tmp_idx = eigen_prod>=tmp_val
@@ -457,15 +437,13 @@ def Hier_R_sel(r_max, Rmax, R_idx, R_tmp, g_idx, eigen_cumsum, R_norm, A,  R, C_
 
     else:
         if Sel_metric == 0 :
-            if len(R_tmp) > num:
-                #R_ = Am_hier(Rmax, R_idx, R_tmp, g_idx, eigen_cumsum, R_norm, A,  R, C_orig, a, num)
+            if len(R_tmp) > num:                
                 R_ = Ac_hier(Rmax, R_idx, R_tmp, g_idx, eigen_cumsum, R_norm, A,  R, C_orig, a, num, Ct)
             else : 
                 R_ = R_tmp
-        elif Sel_metric == 1:
-            #R_ = Am_hier(Rmax, R_idx, R_tmp, g_idx, eigen_cumsum, R_norm, A,  R, C_orig, a, num)
+        elif Sel_metric == 1:            
             if len(R_tmp) > num:
-                R_ = Ac_hier(Rmax, R_idx, R_tmp, g_idx, eigen_cumsum, R_norm, A,  R, C_orig, a, num, Ct)
+                R_ = Am_hier(Rmax, R_idx, R_tmp, g_idx, eigen_cumsum, R_norm, A,  R, C_orig, a, num)
             else : 
                 R_ = R_tmp
 
@@ -595,12 +573,6 @@ def Unfolding_bottom_group_2_of_3(group_hier, set_idx_, setx_iter_2, range_3_tot
     setx_size_3_2 = []
     setx_iter_3_2 = []
 
-#    print 'before ',len(setx_iter_2)
-#    xx = len(setx_iter_2)
-#    setx_iter_2 = np.unique(np.asarray(setx_iter_2), axis=0)
-#    print 'after ',len(setx_iter_2)
-#    if (xx - len(setx_iter_2)) != 0:
-#        aaa = input()
 
     
     # NOTE: To further accelerate the network compression, process this part in parallel.
@@ -652,33 +624,6 @@ def Unfolding_bottom_group_1_of_3(set_idx_group, group_init, group_hier, setx_it
         setx_size_3_1 = setx_size_3_1 + [len(tmp)] 
 
     return setx_iter_3_1, setx_size_3_1, stop_flag
-
-def Unfolding_single_group(set_idx_group, range_3_tot, setx_iter_3_tot, setx_iter_3_sum_tot, Y, group_hier, r_max, Rmax, eigen_cumsum, R_norm, A,  R, C_orig, a, Sel_metric, hier_num, Ct):
-    setx_iter_3_3 = []
-    setx_size_3_3 = []
-
-    for j in range(len(set_idx_group)) : # j : index of stage-1
-
-        set_idx_ = set_idx_group[j]
-        range_3 = range_3_tot[j]
-        setx_iter_3_ = np.asarray(setx_iter_3_tot[j])
-        setx_iter_3_sum = setx_iter_3_sum_tot[j]
-
-        val_stage2 = Y[set_idx_+1] # 
-        #val_stage2 = Y[j] # for unique
-        setx_iter_3_tmp = setx_iter_3_[setx_iter_3_sum == val_stage2] # effective set of stage-3
-        if len(setx_iter_3_tmp) == 0:
-            stop_flag = 1
-            break
-
-        setx_iter_3_, stop_flag = Hier_R_sel(r_max, Rmax, np.asarray(group_hier[set_idx_][0]), setx_iter_3_tmp, group_hier[set_idx_][0], eigen_cumsum, R_norm, A,  R, C_orig, a, Sel_metric, hier_num, Ct) #25
-        if stop_flag == 1:
-            break
-
-        setx_iter_3_3 = setx_iter_3_3 + [setx_iter_3_]
-        setx_size_3_3 = setx_size_3_3 + [len(setx_iter_3_)]
-
-    return setx_iter_3_3, setx_size_3_3, stop_flag
 
 
 def Unfolding_single_group(set_idx_group, range_3_tot, setx_iter_3_tot, setx_iter_3_sum_tot, Y, group_hier, r_max, Rmax, eigen_cumsum, R_norm, A,  R, C_orig, a, Sel_metric, hier_num, Ct):
