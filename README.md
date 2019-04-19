@@ -95,7 +95,7 @@ mv vgg16_svd_1.caffemodel ./init/decomp_init/vgg16/comp_vgg16/model/vgg16_svd_1.
 
 * Network decomposition : "https://github.com/chengtaipu/lowrankcnn"
 * ResNet-56 for Cifar10 : "https://github.com/yihui-he/resnet-cifar10-caffe"
-* VBMF : "https://github.com/CasvandenBogaard/VBMF"
+* VBMF : "https://sites.google.com/site/shinnkj23/downloads"
 
 ## Contact
 
