@@ -99,4 +99,4 @@ mv vgg16_svd_1.caffemodel ./init/decomp_init/vgg16/comp_vgg16/model/vgg16_svd_1.
 
 ## Contact
 
-hyejikim89@kaist.ac.kr, Feel free to contact me. :-)
+hyejikim7833@gmail.com, Feel free to contact me. :-)
