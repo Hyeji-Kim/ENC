@@ -2,7 +2,7 @@
 ["Efficient Neural Network Compression"](https://arxiv.org/abs/1811.12781), CVPR 2019, by Hyeji Kim, Muhammad Umar Karim Khan, Chong-Min Kyung.  
 
 ## Overall Framework
-![i2](https://github.com/Hyeji-Kim/tmptmp/blob/master/overall2.png)
+![i](https://github.com/Hyeji-Kim/ENC/blob/master/fig/overall2.png)
 
 
 ### ENC is the fast network compression platform
