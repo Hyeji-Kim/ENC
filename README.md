@@ -1,8 +1,12 @@
 # ENC: Efficient Neural Network Compression
 ["Efficient Neural Network Compression"](https://arxiv.org/abs/1811.12781), CVPR 2019, by Hyeji Kim, Muhammad Umar Karim Khan, Chong-Min Kyung.  
 
+## Overall Framework
+![i2](https://github.com/Hyeji-Kim/tmptmp/blob/master/overall.png)
+
+
 ### ENC is the fast network compression platform
-* determination of compression ratio for each layer (convolutional, fully-connected)
+* determination of the number of filters for each layer (convolutional, fully-connected)
 * reduction of convolution filters and fully-connected nodes
 * network decomposition based on truncated SVD
 
