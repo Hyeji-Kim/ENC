@@ -6,9 +6,9 @@
 
 
 ### ENC is the fast network compression platform
+* network decomposition based on truncated SVD
 * determination of the number of filters for each layer (convolutional, fully-connected)
 * reduction of convolution filters and fully-connected nodes
-* network decomposition based on truncated SVD
 
 
 ### This repository contains
