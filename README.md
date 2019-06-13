@@ -1,5 +1,5 @@
 # ENC: Efficient Neural Network Compression
-["Efficient Neural Network Compression"](https://arxiv.org/abs/1811.12781), CVPR 2019, by Hyeji Kim, Muhammad Umar Karim Khan, Chong-Min Kyung.  
+["Efficient Neural Network Compression"](http://openaccess.thecvf.com/content_CVPR_2019/papers/Kim_Efficient_Neural_Network_Compression_CVPR_2019_paper.pdf), CVPR 2019, by Hyeji Kim, Muhammad Umar Karim Khan, Chong-Min Kyung.  
 
 ## Overall Framework
 ![i](https://github.com/Hyeji-Kim/ENC/blob/master/fig/overall2.png)
